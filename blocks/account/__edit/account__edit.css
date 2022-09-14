@@ -1,0 +1,17 @@
+.account__edit {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #FFFFFF;
+  background-color: transparent;
+  cursor: pointer;
+  background-image: url("../../../images/pencil.svg");
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  background-position: center;
+  align-self:
+}
+
+.account__edit:hover {
+  opacity: .6;
+  transition: opacity .08s ease-out;
+}

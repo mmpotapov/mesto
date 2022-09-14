@@ -1,0 +1,8 @@
+.account__info {
+  margin-left: 30px;
+  display: grid;
+  grid-template-columns: 294px 24px;
+  grid-template-rows: 39px 18px;
+  gap: 16px 18px;
+  align-items: baseline;
+}

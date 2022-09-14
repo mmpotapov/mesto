@@ -1,0 +1,9 @@
+.account__profession {
+  margin: 0;
+  grid-column-start: 1;
+  grid-column-end: span 2;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}

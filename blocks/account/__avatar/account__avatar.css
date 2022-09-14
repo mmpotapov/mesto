@@ -1,0 +1,8 @@
+.account__avatar {
+  width: 120px;
+  height: 120px;
+  background-image: url("../../../images/Cousteau.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
