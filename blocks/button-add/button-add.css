@@ -14,3 +14,11 @@
   opacity: .6;
   transition: opacity .08s ease-out;
 }
+
+
+@media screen and (max-width: 560px) {
+  .button-add {
+    width: 282px;
+    background-size: 16px 16px;
+  }
+}

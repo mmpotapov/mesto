@@ -2,7 +2,27 @@
   display: flex;
   margin: auto;
   max-width: 880px;
+  min-width: 282px;
   justify-content: space-between;
   padding: 40px 0 50px;
   align-items: center;
+}
+
+@media screen and (max-width: 935px) {
+  .profile {
+    margin-right: 19px;
+    margin-left: 19px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .profile {
+    padding: 42px 0 36px;
+  }
 }
