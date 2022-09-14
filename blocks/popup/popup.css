@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   background-color: #00000080;
-  display: flex; /* удалить */
   justify-content: center;
   align-items: center;
   width: 100%;

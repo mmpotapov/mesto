@@ -30,27 +30,9 @@
       <ul class="elements__list">
         <li class="elements__card">
           <div class="element">
-            <img class="element__photo" src="./images/Karachayevsk.png" alt="Карачаевск">
+            <img class="element__photo" src="./images/Ruskeala.png" alt="Рускеала">
             <div class="element__footer">
-              <h2 class="element__name">Карачаевск</h2>
-              <button class="element__like"></button> <!-- модификатор element__like_active -->
-            </div>
-          </div>
-        </li>
-        <li class="elements__card">
-          <div class="element">
-            <img class="element__photo" src="./images/Elbrus.png" alt="Эльбрус">
-            <div class="element__footer">
-              <h2 class="element__name">Гора Эльбрус</h2>
-              <button class="element__like"></button>
-            </div>
-          </div>
-        </li>
-        <li class="elements__card">
-          <div class="element">
-            <img class="element__photo" src="./images/Dombay.png" alt="Домбай">
-            <div class="element__footer">
-              <h2 class="element__name">Домбай</h2>
+              <h2 class="element__name">Рускеала</h2>
               <button class="element__like"></button>
             </div>
           </div>
@@ -59,25 +41,43 @@
           <div class="element">
             <img class="element__photo" src="./images/Elbrus.png" alt="Эльбрус">
             <div class="element__footer">
-              <h2 class="element__name">Гора Эльбрус</h2>
+              <h2 class="element__name">Эльбрус</h2>
               <button class="element__like"></button>
             </div>
           </div>
         </li>
         <li class="elements__card">
           <div class="element">
-            <img class="element__photo" src="./images/Dombay.png" alt="Домбай">
+            <img class="element__photo" src="./images/Vottovaara.png" alt="Воттоваара">
             <div class="element__footer">
-              <h2 class="element__name">Домбай</h2>
+              <h2 class="element__name">Воттоваара</h2>
               <button class="element__like"></button>
             </div>
           </div>
         </li>
         <li class="elements__card">
           <div class="element">
-            <img class="element__photo" src="./images/Karachayevsk.png" alt="Карачаевск">
+            <img class="element__photo" src="./images/Lago-naki.png" alt="Лаго-наки">
             <div class="element__footer">
-              <h2 class="element__name">Карачаево-Черкессия</h2>
+              <h2 class="element__name">Лаго-наки</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <img class="element__photo" src="./images/Manpupuner.png" alt="Маньпупунёр">
+            <div class="element__footer">
+              <h2 class="element__name">Маньпупунёр</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <img class="element__photo" src="./images/Baikal.png" alt="Байкал">
+            <div class="element__footer">
+              <h2 class="element__name">Байкал</h2>
               <button class="element__like"></button>
             </div>
           </div>
@@ -94,12 +94,14 @@
       <button class="popup__close"></button>
       <form class="popup__form">
         <h2 class="popup__header">Редактировать профиль</h2>
-        <input type="text" class="popup__name"></input>
-        <input type="text" class="popup__profession"></input>
+        <input type="text" name="name" class="popup__name" required placeholder="Имя" value="Жак-Ив Кусто"></input>
+        <input type="text" name="profession" class="popup__profession" placeholder="О себе"
+          value="Исследователь океана"></input>
         <button type="submit" class="popup__save">Сохранить</button>
       </form>
     </div>
   </div>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

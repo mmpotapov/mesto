@@ -1,5 +1,6 @@
 .popup__profession {
   border: none;
+  font-family: inherit;
   border-bottom: 1px solid #CCCCCC;
   margin: 21px 0 48px;
   font-size: 14px;
