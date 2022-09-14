@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+</head>
+
+<body class="page">
+  <header class="header">
+    <a class="header__logo" href="#"></a>
+  </header>
+  <main class="content">
+    <section class="profile">
+      <div class="account">
+        <div class="account__avatar">
+        </div>
+        <div class="account__info">
+          <h1 class="account__name">Жак-Ив Кусто</h1>
+          <h2 class="account__profession">Исследователь океана</h2>
+        </div>
+        <button class="account__edit"></button>
+      </div>
+      <button class="button-add"></button>
+    </section>
+    <section class="elements">
+      <ul class="elements__list">
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Карачаевск</h2>
+              <button class="element__like"></button> <!-- модификатор element__like_active -->
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Гора Эльбрус</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Домбай</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Гора Эльбрус</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Домбай</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+        <li class="elements__card">
+          <div class="element">
+            <div class="element__photo"></div>
+            <div class="element__footer">
+              <h2 class="element__name">Карачаево-Черкессия</h2>
+              <button class="element__like"></button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+  </footer>
+  <div class="popup">
+    <!-- модификатор popup_opened при открытии -->
+    <div class="popup__container">
+      <form class="form">
+        <h2 class="form__header">Редактировать профиль</h2>
+        <input type="form__name"></input>
+        <input type="form__profession"></input>
+        <button type="submit" class="form__save"></button>
+      </form>
+      <button class="popup__close"></button>
+    </div>
+  </div>
+</body>
+
+</html>
