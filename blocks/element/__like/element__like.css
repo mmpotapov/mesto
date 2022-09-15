@@ -9,9 +9,9 @@
   background-size: 22px 19px;
   background-position: center;
   margin-right: 20px;
+  transition: opacity .08s ease-out;
 }
 
 .element__like:hover {
   opacity: .5;
-  transition: opacity .08s ease-out;
 }

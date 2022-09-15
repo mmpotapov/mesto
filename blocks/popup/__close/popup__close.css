@@ -12,11 +12,11 @@
   position: absolute;
   top: -40px;
   right: -40px;
+  transition: opacity .08s ease-out;
 }
 
 .popup__close:hover {
   opacity: .6;
-  transition: opacity .08s ease-out;
 }
 
 @media screen and (max-width: 720px) {

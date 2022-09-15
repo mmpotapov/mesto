@@ -1,6 +1,6 @@
 .profile {
   display: flex;
-  margin: auto;
+  margin: 0 auto;
   max-width: 880px;
   min-width: 282px;
   justify-content: space-between;
@@ -24,5 +24,6 @@
 @media screen and (max-width: 560px) {
   .profile {
     padding: 42px 0 36px;
+    min-height: 286px;
   }
 }
