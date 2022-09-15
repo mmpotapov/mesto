@@ -1,4 +1,4 @@
-.account__profession {
+.profile__profession {
   margin: 0;
   grid-column-start: 1;
   grid-column-end: span 2;
@@ -11,10 +11,12 @@
 }
 
 @media screen and (max-width: 560px) {
-  .account__profession {
+  .profile__profession {
+    grid-column-start: 1;
+    grid-column-end: span 3;
     justify-self: center;
     font-size: 14px;
     line-height: 17px;
-    margin: 7px 0 32px;
+    max-width: 282px;
   }
 }

@@ -1,4 +1,4 @@
-.account__info {
+.profile__info {
   margin-left: 30px;
   display: grid;
   grid-template-columns: 294px 24px;
@@ -8,11 +8,12 @@
 }
 
 @media screen and (max-width: 560px) {
-  .account__info {
+  .profile__info {
     margin-left: 0;
     margin-top: 26px;
-    display: block;
-    text-align: center;
+    grid-template-columns: 20px auto 20px;
+    grid-template-rows: max-content;
+    gap: 7px 10px;
     position: relative;
   }
 }
