@@ -19,11 +19,11 @@
         <img class="profile__avatar" src="./images/Cousteau.png" alt="Фото профиля">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button type="button" class="profile__edit"></button>
+          <button type="button" class="profile__edit" aria-label="Редактировать"></button>
           <p class="profile__profession">Исследователь океана</p>
         </div>
       </div>
-      <button type="button" class="profile__button-add"></button>
+      <button type="button" class="profile__button-add" aria-label="Добавить"></button>
     </section>
     <section class="elements" aria-label="Галлерея мест">
       <ul class="elements__list">
@@ -90,7 +90,7 @@
   <div class="popup">
     <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+      <button type="button" class="popup__close" aria-label="Закрыть"></button>
       <form class="popup__form" name="profile-form">
         <h2 class="popup__header">Редактировать профиль</h2>
         <input type="text" name="name" class="popup__input popup__input_value_name" required placeholder="Имя" value="Жак-Ив Кусто">

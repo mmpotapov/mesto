@@ -12,7 +12,6 @@
 
 @media screen and (max-width: 560px) {
   .profile__profession {
-    grid-column-start: 1;
     grid-column-end: span 3;
     justify-self: center;
     font-size: 14px;
