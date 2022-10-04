@@ -34,6 +34,7 @@
               <h2 class="element__name">Рускеала</h2>
               <button type="button" class="element__like"></button>
             </div>
+            <button type="button" class="element__delete" aria-label="Удалить"></button>
           </article>
         </li>
         <li class="elements__card">
@@ -87,7 +88,7 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_type_profile">
     <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
       <button type="button" class="popup__close" aria-label="Закрыть"></button>
@@ -97,6 +98,19 @@
         <input type="text" name="profession" class="popup__input popup__input_value_profession" placeholder="О себе"
           value="Исследователь океана">
         <button type="submit" class="popup__save">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_card">
+    <!-- модификатор popup_opened при открытии -->
+    <div class="popup__container">
+      <button type="button" class="popup__close" aria-label="Закрыть"></button>
+      <form class="popup__form" name="profile-form">
+        <h2 class="popup__header">Новое место</h2>
+        <input type="text" name="name" class="popup__input popup__input_value_place" required placeholder="Название">
+        <input type="text" name="profession" class="popup__input popup__input_value_link" placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save">Создать</button>
       </form>
     </div>
   </div>
