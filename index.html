@@ -27,74 +27,35 @@
     </section>
     <section class="elements" aria-label="Галлерея мест">
       <ul class="elements__list">
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Ruskeala.png" alt="Рускеала">
-            <div class="element__footer">
-              <h2 class="element__name">Рускеала</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-            <button type="button" class="element__delete" aria-label="Удалить"></button>
-          </article>
-        </li>
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Elbrus.png" alt="Эльбрус">
-            <div class="element__footer">
-              <h2 class="element__name">Эльбрус</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </li>
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Vottovaara.png" alt="Воттоваара">
-            <div class="element__footer">
-              <h2 class="element__name">Воттоваара</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </li>
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Lago-naki.png" alt="Лаго-наки">
-            <div class="element__footer">
-              <h2 class="element__name">Лаго-наки</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </li>
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Manpupuner.png" alt="Маньпупунёр">
-            <div class="element__footer">
-              <h2 class="element__name">Маньпупунёр</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </li>
-        <li class="elements__card">
-          <article class="element">
-            <img class="element__photo" src="./images/Baikal.png" alt="Байкал">
-            <div class="element__footer">
-              <h2 class="element__name">Байкал</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </li>
       </ul>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
+
+  <!-- темплейт карточки -->
+  <template id="card">
+    <li class="elements__card">
+      <article class="element">
+        <img class="element__photo" src="" alt="">
+        <div class="element__footer">
+          <h2 class="element__name"></h2>
+          <button type="button" class="element__like"></button>
+        </div>
+        <button type="button" class="element__delete" aria-label="Удалить"></button>
+      </article>
+    </li>
+  </template>
+
   <div class="popup popup_type_profile">
     <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
       <button type="button" class="popup__close" aria-label="Закрыть"></button>
       <form class="popup__form" name="profile-form">
         <h2 class="popup__header">Редактировать профиль</h2>
-        <input type="text" name="name" class="popup__input popup__input_value_name" required placeholder="Имя" value="Жак-Ив Кусто">
+        <input type="text" name="name" class="popup__input popup__input_value_name" required placeholder="Имя"
+          value="Жак-Ив Кусто">
         <input type="text" name="profession" class="popup__input popup__input_value_profession" placeholder="О себе"
           value="Исследователь океана">
         <button type="submit" class="popup__save">Сохранить</button>
@@ -103,17 +64,28 @@
   </div>
 
   <div class="popup popup_type_card">
-    <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
       <button type="button" class="popup__close" aria-label="Закрыть"></button>
       <form class="popup__form" name="profile-form">
         <h2 class="popup__header">Новое место</h2>
         <input type="text" name="name" class="popup__input popup__input_value_place" required placeholder="Название">
-        <input type="text" name="profession" class="popup__input popup__input_value_link" placeholder="Ссылка на картинку">
+        <input type="text" name="profession" class="popup__input popup__input_value_link" required
+          placeholder="Ссылка на картинку">
         <button type="submit" class="popup__save">Создать</button>
       </form>
     </div>
   </div>
+
+  <div class="popup popup_type_photo">
+    <div class="popup__container">
+      <button type="button" class="popup__close" aria-label="Закрыть"></button>
+      <figure class="popup__figure">
+        <img class="popup__photo" src="" alt="">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+    </div>
+  </div>
+
   <script src="./scripts/index.js"></script>
 </body>
 
