@@ -23,20 +23,21 @@ const photoImage = popUpPhoto.querySelector('.popup__photo');
 const photoCaption = popUpPhoto.querySelector('.popup__caption');
 
 // общие функции открытия и закрытия попапов
-function openPopUp(type) {
+const openPopUp = function (type) {
   type.classList.add("popup_opened");
 }
 
-function closePopUp(type) {
+const closePopUp = function (type) {
   type.classList.remove("popup_opened")
 }
 
 // закрытие любого попапа на крестик
-closeButtons.forEach((button) => {
+closeButtons.forEach(function (button) {
   const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopUp(popup));
+  button.addEventListener('click', function () {
+    closePopUp(popup)
+  });
 });
-
 
 // нажатие на карандаш для изменения профиля
 pencilEdit.addEventListener("click", function () {
@@ -51,7 +52,7 @@ buttonAddCard.addEventListener("click", function () {
 });
 
 // отправка формы для изменения имени
-function saveChangingProfile(event) {
+const saveChangingProfile = function (event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
@@ -89,7 +90,7 @@ const initialCards = [
 
 
 // Создание карточки
-function createCard(object) {
+const createCard = function (object) {
   const cardTemplate = cardTemplateBlock.content.cloneNode(true);
   cardTemplate.querySelector('.element__name').textContent = object.name;
   cardTemplate.querySelector('.element__photo').src = object.link;
@@ -122,7 +123,7 @@ initialCards.forEach(function (element) {
 })
 
 // Добавление карточки с помощью +
-function addNewCard(event) {
+const addNewCard = function (event) {
   event.preventDefault();
   let pair = {
     name: placeInput.value,
