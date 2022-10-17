@@ -54,11 +54,13 @@
       <button type="button" class="popup__close" aria-label="Закрыть"></button>
       <form class="popup__form" name="profile-form">
         <h2 class="popup__header">Редактировать профиль</h2>
-        <input type="text" name="name" class="popup__input popup__input_value_name" required placeholder="Имя"
+        <!-- popup__input_type_incorrect и popup__input-error — временно -->
+        <input type="text" name="name" class="popup__input popup__input_value_name popup__input_type_incorrect" id="popup__input" required placeholder="Имя"
           value="Жак-Ив Кусто">
+          <span class="popup__input-error">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, deserunt vel aspernatur fuga quae adipisci veniam, iure inventore fugiat modi nihil libero dolor? Sequi nam sed laboriosam porro doloremque neque.</span>
         <input type="text" name="profession" class="popup__input popup__input_value_profession" placeholder="О себе"
           value="Исследователь океана">
-        <button type="submit" class="popup__save">Сохранить</button>
+        <button type="submit" class="popup__save popup__save_disabled" disabled>Сохранить</button>
       </form>
     </div>
   </div>
@@ -71,7 +73,7 @@
         <input type="text" name="name" class="popup__input popup__input_value_place" required placeholder="Название">
         <input type="text" name="profession" class="popup__input popup__input_value_link" required
           placeholder="Ссылка на изображение">
-        <button type="submit" class="popup__save">Создать</button>
+        <button type="submit" class="popup__save popup__save_disabled" disabled>Создать</button>
       </form>
     </div>
   </div>
