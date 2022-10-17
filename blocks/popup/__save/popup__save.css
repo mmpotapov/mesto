@@ -9,7 +9,7 @@
   line-height: 22px;
   text-align: center;
   cursor: pointer;
-  margin-top: 48px;
+  margin-top: 27px;
   border-radius: 2px;
   transition: opacity .08s ease-out;
 }
@@ -22,7 +22,7 @@
   .popup__save {
     font-size: 14px;
     line-height: 17px;
-    margin-top: 45px;
+    margin-top: 24px;
     min-height: 46px;
   }
 }
