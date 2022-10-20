@@ -1,4 +1,5 @@
 // элементы для редактирования профиля
+const popUps = document.querySelectorAll('.popup');
 const closeButtons = document.querySelectorAll('.popup__close');
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
@@ -38,6 +39,24 @@ closeButtons.forEach(function (button) {
     closePopUp(popup)
   });
 });
+
+// закрытие попапа при нажатии на оверлей
+popUps.forEach(function (popUpElement) {
+  popUpElement.addEventListener('click', function (evt) {
+    if (evt.target == evt.currentTarget) {
+      closePopUp(popUpElement);
+    }
+  });
+});
+
+// закрытие попапа при нажатии на Esc
+popUps.forEach(function (popUpElement) {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key == 'Escape') {
+      closePopUp(popUpElement);
+    }
+  })
+})
 
 // нажатие на карандаш для изменения профиля
 pencilEdit.addEventListener("click", function () {
