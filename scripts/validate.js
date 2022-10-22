@@ -80,7 +80,6 @@ const enableValidation = function (config) {
     setEventListeners(formElement, configValidation);
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
-      setEventListeners(formElement, configValidation);
     })
   })
 }
