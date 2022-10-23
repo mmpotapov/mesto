@@ -62,6 +62,10 @@ const handleEscToClose = function (evt) {
 
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
+  const inputsFormProfileEditList = Array.from(formProfileEdit.querySelectorAll('.popup__input'));
+  inputsFormProfileEditList.forEach(function (inputElement) {
+    hideInputError(formProfileEdit, inputElement, configValidation);
+  })
   nameInput.value = profileName.textContent;
   jobInput.value = profileProfession.textContent;
   openPopUp(popUpEditProfile);
