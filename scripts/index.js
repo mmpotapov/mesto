@@ -61,10 +61,14 @@ const handleEscToClose = function (evt) {
 
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
-  const inputsFormProfileEditList = Array.from(formProfileEdit.querySelectorAll('.popup__input'));
-  inputsFormProfileEditList.forEach(function (inputElement) {
-    hideInputError(formProfileEdit, inputElement, configValidation);
-  })
+  // const inputsFormProfileEditList = Array.from(formProfileEdit.querySelectorAll('.popup__input'));
+  // inputsFormProfileEditList.forEach(function (inputElement) {
+  //   hideInputError(formProfileEdit, inputElement, configValidation);
+  // })
+
+  // hideInputError22(formProfileEdit, configValidation);
+  formProfileEditValidator.clearErrors();
+
   nameInput.value = profileName.textContent;
   jobInput.value = profileProfession.textContent;
   openPopUp(popUpEditProfile);
@@ -176,10 +180,12 @@ const handleAddCard = function (evt) {
     name: placeInput.value,
     link: linkInput.value
   }
-  cardsContainer.prepend(createCard(pair));
+  const card = new Card(pair, '#card');
+  cardsContainer.prepend(card.generateCard());
   closePopUp(popUpAddCard);
   evt.target.reset();
-  blockButton(formAddCardButton, configValidation);
+  // blockButton(formAddCardButton, configValidation);
+  formAddCardValidator.blockButton();
 }
 
 /** 6 исходных карточек */
