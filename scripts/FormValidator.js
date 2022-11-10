@@ -65,8 +65,7 @@ export class FormValidator {
   /** Сбросить сообщения валидации */
   clearErrors() {
     this._inputList.forEach((inputElement) => {
-      inputElement.classList.remove(this._inputErrorClass);
-      this._formElement.querySelector(`.${inputElement.id}-error`).textContent = '';
+      this._hideInputError(inputElement);
      })
     }
 

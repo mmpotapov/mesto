@@ -129,6 +129,11 @@ const handleChangingProfile = function (event) {
   closePopUp(popUpEditProfile);
 }
 
+/** Генерация карточки */
+function createCard(object) {
+  return new Card(object, '#card', zoomPhoto).generateCard();
+}
+
 /** Добавление карточки с помощью + */
 const handleAddCard = function (evt) {
   evt.preventDefault();
@@ -136,8 +141,8 @@ const handleAddCard = function (evt) {
     name: placeInput.value,
     link: linkInput.value
   }
-  const card = new Card(pair, '#card', zoomPhoto);
-  cardsContainer.prepend(card.generateCard());
+  const card = createCard(pair);
+  cardsContainer.prepend(card);
   closePopUp(popUpAddCard);
   evt.target.reset();
   formAddCardValidator.blockButton();
@@ -145,9 +150,8 @@ const handleAddCard = function (evt) {
 
 /** 6 исходных карточек */
 initialCards.forEach((item) => {
-  const card = new Card(item, '#card', zoomPhoto);
-  const cardElement = card.generateCard();
-  cardsContainer.append(cardElement);
+  const card = createCard(item);
+  cardsContainer.append(card);
 })
 
 /** Подключение проверки валидности форм */
