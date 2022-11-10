@@ -1,3 +1,44 @@
+import { FormValidator } from './FormValidator.js';
+import { Card } from './Card.js';
+
+/** Данные для отображения карточек */
+const initialCards = [
+  {
+    name: 'Рускеала',
+    link: 'https://images.unsplash.com/photo-1573156667506-115190c68737?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80'
+  },
+  {
+    name: 'Эльбрус',
+    link: 'https://images.unsplash.com/photo-1599425162155-63c31bbb9dc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80'
+  },
+  {
+    name: 'Лаго-Наки',
+    link: 'https://images.unsplash.com/photo-1538649528991-427afdbe7884?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Руза',
+    link: 'https://images.unsplash.com/photo-1591569135425-a5f4b34e52d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+/** Конфиг с селекторами */
+const configValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_disabled',
+  inputErrorClass: 'popup__input_type_incorrect',
+  errorClass: 'popup__error_visible'
+}
+
 /** Элементы для редактирования профиля */
 const popUps = document.querySelectorAll('.popup');
 const closeButtons = document.querySelectorAll('.popup__close');
@@ -16,19 +57,19 @@ const cardsContainer = document.querySelector('.elements__list');
 const formAddCard = popUpAddCard.querySelector(".popup__form");
 const placeInput = formAddCard.querySelector(".popup__input_value_place");
 const linkInput = formAddCard.querySelector(".popup__input_value_link");
-const formAddCardButton = formAddCard.querySelector('.popup__save');
 
 /** Элементы для раскрытия изображения на весь экран */
 const popUpPhoto = document.querySelector(".popup_type_photo");
 const photoImage = popUpPhoto.querySelector('.popup__photo');
 const photoCaption = popUpPhoto.querySelector('.popup__caption');
 
-/** Общие функции открытия и закрытия попапов */
+/** Общая функция открытия попапа */
 const openPopUp = function (type) {
   type.classList.add("popup_opened");
   document.addEventListener("keydown", handleEscToClose);
 }
 
+/** Общая функция закрытия попапа */
 const closePopUp = function (type) {
   type.classList.remove("popup_opened");
   document.removeEventListener("keydown", handleEscToClose);
@@ -59,16 +100,17 @@ const handleEscToClose = function (evt) {
   }
 }
 
+/** Увеличить фото при нажатии на карточку */
+const zoomPhoto = function (name, link) {
+  photoImage.src = link;
+  photoImage.alt = name;
+  photoCaption.textContent = name;
+  openPopUp(popUpPhoto);
+}
+
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
-  // const inputsFormProfileEditList = Array.from(formProfileEdit.querySelectorAll('.popup__input'));
-  // inputsFormProfileEditList.forEach(function (inputElement) {
-  //   hideInputError(formProfileEdit, inputElement, configValidation);
-  // })
-
-  // hideInputError22(formProfileEdit, configValidation);
   formProfileEditValidator.clearErrors();
-
   nameInput.value = profileName.textContent;
   jobInput.value = profileProfession.textContent;
   openPopUp(popUpEditProfile);
@@ -87,92 +129,6 @@ const handleChangingProfile = function (event) {
   closePopUp(popUpEditProfile);
 }
 
-// const cardTemplateBlock = document.querySelector('#card');
-
-
-/** Переключить лайк */
-// const handleLikeClick = function (evt) {
-//   evt.target.classList.toggle("element__like_active");
-// }
-
-/** Удалить карточку */
-// const handleDeleteCard = function (evt) {
-//   evt.target.closest('.elements__card').remove();
-// }
-
-/** Создание карточки */
-// const createCard = function (cardData) {
-//   const cardTemplate = cardTemplateBlock.content.cloneNode(true);
-//   const photo = cardTemplate.querySelector('.element__photo');
-//   cardTemplate.querySelector('.element__name').textContent = cardData.name;
-//   photo.src = cardData.link;
-//   photo.alt = cardData.name;
-//   /** Лайк */
-//   const like = cardTemplate.querySelector('.element__like');
-//   like.addEventListener('click', handleLikeClick);
-//   /** Корзинка */
-//   const trash = cardTemplate.querySelector('.element__delete');
-//   trash.addEventListener('click', handleDeleteCard);
-//   /** Открыть изображение на полный экран */
-//   photo.addEventListener('click', function () {
-//     photoImage.src = cardData.link;
-//     photoImage.alt = cardData.name;
-//     photoCaption.textContent = cardData.name;
-//     openPopUp(popUpPhoto);
-//   });
-//   return cardTemplate;
-// }
-
-
-/** 6 исходных карточек */
-// initialCards.forEach(function (element) {
-//   cardsContainer.append(createCard(element));
-// })
-
-
-/** Создание карточки*/
-class Card {
-  constructor(cardData, templateSelector) {
-    this._name = cardData.name;
-    this._link = cardData.link;
-    this._templateSelector = templateSelector;
-  }
-
-  _getTemplate() {
-    const cardElement = document.querySelector(this._templateSelector).content.cloneNode(true);
-    return cardElement;
-  }
-
-  _handleLikeClick(evt) {
-    evt.target.classList.toggle("element__like_active");
-  }
-
-  _handleDeleteCard(evt) {
-    evt.target.closest('.elements__card').remove();
-  }
-
-  _setEventListeners() {
-    this._element.querySelector('.element__like').addEventListener('click', this._handleLikeClick)
-    this._element.querySelector('.element__delete').addEventListener('click', this._handleDeleteCard);
-    this._element.querySelector('.element__photo').addEventListener('click', () => {
-      photoImage.src = this._link;
-      photoImage.alt = this._name;
-      photoCaption.textContent = this._name;
-      openPopUp(popUpPhoto);
-    });
-  };
-
-  generateCard() {
-    this._element = this._getTemplate();
-    this._setEventListeners();
-    this._element.querySelector('.element__photo').src = this._link;
-    this._element.querySelector('.element__photo').alt = this._name;
-    this._element.querySelector('.element__name').textContent = this._name;
-
-    return this._element;
-  }
-}
-
 /** Добавление карточки с помощью + */
 const handleAddCard = function (evt) {
   evt.preventDefault();
@@ -180,20 +136,26 @@ const handleAddCard = function (evt) {
     name: placeInput.value,
     link: linkInput.value
   }
-  const card = new Card(pair, '#card');
+  const card = new Card(pair, '#card', zoomPhoto);
   cardsContainer.prepend(card.generateCard());
   closePopUp(popUpAddCard);
   evt.target.reset();
-  // blockButton(formAddCardButton, configValidation);
   formAddCardValidator.blockButton();
 }
 
 /** 6 исходных карточек */
 initialCards.forEach((item) => {
-  const card = new Card(item, '#card');
+  const card = new Card(item, '#card', zoomPhoto);
   const cardElement = card.generateCard();
   cardsContainer.append(cardElement);
 })
 
+/** Подключение проверки валидности форм */
+const formProfileEditValidator = new FormValidator(configValidation, formProfileEdit);
+formProfileEditValidator.enableValidation();
+const formAddCardValidator = new FormValidator(configValidation, formAddCard);
+formAddCardValidator.enableValidation();
+
+/** Слушатели submit для форм*/
 formProfileEdit.addEventListener('submit', handleChangingProfile);
 formAddCard.addEventListener('submit', handleAddCard);
