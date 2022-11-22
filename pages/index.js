@@ -4,7 +4,6 @@ import { Card } from '../components/Card.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { UserInfo } from '../components/UserInfo.js';
-
 import {
   buttonEdit,
   buttonAddCard,
@@ -26,10 +25,12 @@ import {
 /** Создать попап с картинкой */
 const popupZoom = new PopupWithImage(popUpPhotoSelector);
 
+
 /** Генерация карточки */
 function createCard(object) {
   return new Card(object, '#card', (name, link) => { popupZoom.open(name, link) }).generateCard();
 }
+
 
 /** Создать и добавить в главный контейнер 6 исходных карт */
 const cardsContainerRender = new Section({
@@ -39,6 +40,7 @@ const cardsContainerRender = new Section({
     cardsContainerRender.addItem(card);
   }
 }, cardsContainerSelector);
+
 
 /** Создать попап с формой для добавления пользовательских фото */
 const popupCard = new PopupWithForm({
@@ -57,6 +59,7 @@ const popupCard = new PopupWithForm({
 /** Управление информацией о пользователе */
 const userInfo = new UserInfo({ nameSelector: profileNameSelector, professionSelector: profileProfessionSelector });
 
+
 /** Создать попап с формой для редактирования профиля */
 const popupProfile = new PopupWithForm({
   handleFormSubmit: (data) => { userInfo.setUserInfo(data) }
@@ -71,17 +74,18 @@ buttonEdit.addEventListener("click", function () {
   popupProfile.open();
 });
 
+
 /** Нажатие на [+] для добавления карточки */
 buttonAddCard.addEventListener("click", function () {
   popupCard.open();
 });
 
 
-/** Отрисовать контейнер и 6 полученными картами */
+/** Отрисовать контейнер с содержимым */
 cardsContainerRender.renderItems();
 
 
-/** Уши для попапов*/
+/** Активировать слушатели у попапов*/
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
 popupZoom.setEventListeners();
