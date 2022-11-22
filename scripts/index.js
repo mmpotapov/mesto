@@ -1,6 +1,10 @@
 import { FormValidator } from './FormValidator.js';
 import { Card } from './Card.js';
 import { Section } from './Section.js';
+import { PopupWithForm } from './PopupWithForm.js';
+import { PopupWithImage } from './PopupWithImage.js';
+import { UserInfo } from './UserInfo.js';
+
 
 
 /** Данные для отображения карточек */
@@ -144,11 +148,16 @@ const photoCaption = popUpPhoto.querySelector('.popup__caption');
 //   openPopUp(popUpPhoto);
 // }
 
+/** Генерация карточки */
+function createCard(object) {
+  return new Card(object, '#card', (name, link) => { popupZoom.open(name, link) }).generateCard();
+}
+
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
   formProfileEditValidator.clearErrors();
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().profession;
   popupProfile.open();
 });
 
@@ -156,6 +165,8 @@ buttonEdit.addEventListener("click", function () {
 buttonAddCard.addEventListener("click", function () {
   popupCard.open();
 });
+
+
 
 
 
@@ -173,8 +184,19 @@ formAddCardValidator.enableValidation();
 
 
 
-/** Константа — селектор главного контейнера */
+
+
+
+
+
+
+/** Селекторы ПР8*/
 const cardsContainerSelector = '.elements__list';
+const popUpEditProfileSelector = '.popup_type_profile';
+const popUpAddCardSelector = '.popup_type_card';
+const popUpPhotoSelector = ".popup_type_photo";
+const profileNameSelector = ".profile__name";
+const profileProfessionSelector = ".profile__profession";
 
 /** Создать и добавить в главный контейнер 6 исходных карт */
 const cardsContainerRender = new Section({
@@ -189,103 +211,6 @@ cardsContainerRender.renderItems();
 
 
 
-
-
-/** Конструктор общего попапа */
-class Popup {
-  constructor(popupSelector) {
-    this._popupElement = document.querySelector(popupSelector);
-    this._handleEscClose = this._handleEscClose.bind(this);
-  }
-
-  /** Закрытие при нажатии на ESC */
-  _handleEscClose(evt) {
-    if (evt.key == 'Escape') {
-      this.close();
-    }
-  }
-
-  /** Открытие */
-  open() {
-    this._popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);
-  }
-
-  /** Закрытие */
-  close() {
-    this._popupElement.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose);
-  }
-
-  /** Слушатель крестика и нажатия на оверлей, с реакцией закрытия */
-  setEventListeners() {
-    this._popupElement.querySelector('.popup__close').addEventListener('click', () => {
-      this.close();
-    });
-
-    this._popupElement.addEventListener('click', (evt) => {
-      if (evt.target === evt.currentTarget) {
-        this.close();
-      }
-    })
-  }
-}
-
-/** Конструктор попапа для изменения информации о пользователе */
-class PopupWithForm extends Popup {
-  constructor({ handleFormSubmit }, popupSelector) {
-    super(popupSelector);
-    this._handleFormSubmit = handleFormSubmit;
-    this._inputList = this._popupElement.querySelectorAll('.popup__input');
-  }
-
-  /** Создать объект из введённых данных */
-  _getInputValues() {
-    this._inputs = {};
-    this._inputList.forEach((input) => {
-      this._inputs[input.name] = [input.value];
-    });
-    return this._inputs;
-  };
-
-  /** Закрыть попап со сброс полей */
-  close() {
-    super.close();
-    this._inputList.forEach((input) => {
-      input.value = '';
-    })
-  }
-
-  /** Закрытие попапа + Реакция на сабмит: сброс стандартного события, использование данных формы и закрытие */
-  setEventListeners() {
-    super.setEventListeners();
-    this._popupElement.querySelector(".popup__form").addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-      this.close();
-    });
-  }
-}
-
-/** Селектор попапа для редактирования профиля */
-const popUpEditProfileSelector = '.popup_type_profile';
-
-/** Создать попап с формой для редактирования профиля */
-const popupProfile = new PopupWithForm({
-  handleFormSubmit: (data) => {
-    profileName.textContent = data.name;
-    profileProfession.textContent = data.profession;
-  }
-}, popUpEditProfileSelector);
-
-/** Уши для попапа профиля */
-popupProfile.setEventListeners();
-
-
-
-/** Селектор попапа для добавления фото */
-const popUpAddCardSelector = '.popup_type_card';
-
 /** Создать попап с формой для добавления пользовательских фото */
 const popupCard = new PopupWithForm({
   handleFormSubmit: (data) => {
@@ -299,38 +224,28 @@ const popupCard = new PopupWithForm({
   }
 }, popUpAddCardSelector);
 
-/** Уши для попапа добавления фото */
-popupCard.setEventListeners();
-
-
-
-
-/** Конструктор попапа с увеличенным фото */
-class PopupWithImage extends Popup {
-  constructor(popupSelector) {
-    super(popupSelector);
-    this._photoImage = this._popupElement.querySelector('.popup__photo');
-    this._photoCaption = this._popupElement.querySelector('.popup__caption');
-  }
-
-  open(name, link) {
-    this._photoImage.src = link;
-    this._photoImage.alt = name;
-    this._photoCaption.textContent = name;
-    super.open();
-  }
-}
-
-/** Селектор попапа для большого фото */
-const popUpPhotoSelector = ".popup_type_photo";
-
 /** Создать попап с картинкой */
 const popupZoom = new PopupWithImage(popUpPhotoSelector);
 
-/** Генерация карточки */
-function createCard(object) {
-  return new Card(object, '#card', (name, link) => { popupZoom.open(name, link) }).generateCard();
-}
 
-/** Уши для попапа с картинкой на весь экран*/
+
+
+
+
+
+
+
+const userInfo = new UserInfo({ nameSelector: profileNameSelector, professionSelector: profileProfessionSelector });
+
+
+/** Создать попап с формой для редактирования профиля */
+const popupProfile = new PopupWithForm({
+  handleFormSubmit: (data) => { userInfo.setUserInfo(data) }
+}, popUpEditProfileSelector);
+
+
+
+/** Уши для попапов*/
+popupProfile.setEventListeners();
+popupCard.setEventListeners();
 popupZoom.setEventListeners();

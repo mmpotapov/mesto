@@ -1,9 +1,9 @@
 export class Card {
-  constructor(cardData, templateSelector, openCard) {
+  constructor(cardData, templateSelector, handleCardClick) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._templateSelector = templateSelector;
-    this._openCard = openCard;
+    this._handleCardClick = handleCardClick;
   }
 
   /** Получить темплейт */
@@ -27,7 +27,7 @@ export class Card {
     this._element.querySelector('.element__like').addEventListener('click', this._handleLikeClick)
     this._element.querySelector('.element__delete').addEventListener('click', this._handleDeleteCard);
     this._element.querySelector('.element__photo').addEventListener('click', () => {
-      this._openCard(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     });
   };
 
