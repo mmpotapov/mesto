@@ -18,8 +18,6 @@ export class Section {
   /** Для каждого элемента из базы поочерёдно вызвать колбэк this._renderer */
   renderItems() {
     this.clear();
-    this._renderedItems.forEach(item => {
-      this._renderer(item);
-    });
+    this._renderedItems.forEach(this._renderer);
   }
 }

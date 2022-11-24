@@ -26,12 +26,8 @@ export class Popup {
 
   /** Слушатель крестика и нажатия на оверлей, с реакцией закрытия */
   setEventListeners() {
-    this._popupElement.querySelector('.popup__close').addEventListener('click', () => {
-      this.close();
-    });
-
     this._popupElement.addEventListener('click', (evt) => {
-      if (evt.target === evt.currentTarget) {
+      if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
         this.close();
       }
     })

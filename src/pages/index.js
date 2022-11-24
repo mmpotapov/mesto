@@ -17,15 +17,23 @@ import {
   popUpPhotoSelector,
   profileNameSelector,
   profileProfessionSelector,
+  formAddCard,
+  formProfileEdit,
+} from '../utils/elements.js';
+
+import {
   initialCards,
   configValidation,
-  formAddCard,
-  formProfileEdit
 } from '../utils/constants.js';
 
 
 /** Создать попап с картинкой */
 const popupZoom = new PopupWithImage(popUpPhotoSelector);
+
+
+/** Создать валидаторы форм */
+const formProfileEditValidator = new FormValidator(configValidation, formProfileEdit);
+const formAddCardValidator = new FormValidator(configValidation, formAddCard);
 
 
 /** Генерация карточки */
@@ -46,12 +54,11 @@ const cardsContainerRender = new Section({
 
 /** Создать попап с формой для добавления пользовательских фото */
 const popupCard = new PopupWithForm({
-  handleFormSubmit: (data) => {
-    const pair = {
-      name: data.place,
-      link: data.link
-    }
-    const card = createCard(pair);
+  handleFormSubmit: ({ place, link }) => {
+    const card = createCard({
+      name: place,
+      link: link
+    });
     cardsContainerRender.addItem(card);
     formAddCardValidator.blockButton();
   }
@@ -64,21 +71,28 @@ const userInfo = new UserInfo({ nameSelector: profileNameSelector, professionSel
 
 /** Создать попап с формой для редактирования профиля */
 const popupProfile = new PopupWithForm({
-  handleFormSubmit: (data) => { userInfo.setUserInfo(data) }
+  handleFormSubmit: (data) => {
+    userInfo.setUserInfo({
+      username: data.name,
+      userprofession: data.profession,
+    })
+  }
 }, popUpEditProfileSelector);
 
 
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
   formProfileEditValidator.clearErrors();
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().profession;
+  const userInfoData = userInfo.getUserInfo();
+  nameInput.value = userInfoData.name;
+  jobInput.value = userInfoData.profession;
   popupProfile.open();
 });
 
 
 /** Нажатие на [+] для добавления карточки */
 buttonAddCard.addEventListener("click", function () {
+  formAddCardValidator.clearErrors();
   popupCard.open();
 });
 
@@ -94,7 +108,5 @@ popupZoom.setEventListeners();
 
 
 /** Подключение проверки валидности форм */
-const formProfileEditValidator = new FormValidator(configValidation, formProfileEdit);
 formProfileEditValidator.enableValidation();
-const formAddCardValidator = new FormValidator(configValidation, formAddCard);
 formAddCardValidator.enableValidation();

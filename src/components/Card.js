@@ -8,7 +8,7 @@ export class Card {
 
   /** Получить темплейт */
   _getTemplate() {
-    const cardElement = document.querySelector(this._templateSelector).content.cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector(".elements__card").cloneNode(true);
     return cardElement;
   }
 
@@ -17,16 +17,17 @@ export class Card {
     evt.target.classList.toggle("element__like_active");
   }
 
-  /** Удалить карточку */
-  _handleDeleteCard(evt) {
-    evt.target.closest('.elements__card').remove();
+  _handleDeleteCard() {
+    this._element.remove();
   }
 
   /** Слушатели */
   _setEventListeners() {
     this._element.querySelector('.element__like').addEventListener('click', this._handleLikeClick)
-    this._element.querySelector('.element__delete').addEventListener('click', this._handleDeleteCard);
-    this._element.querySelector('.element__photo').addEventListener('click', () => {
+    this._element.querySelector('.element__delete').addEventListener("click", () => {
+      this._handleDeleteCard();
+    })
+    this._elementPhoto.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
   };
@@ -34,9 +35,10 @@ export class Card {
   /** Сгенерировать карту */
   generateCard() {
     this._element = this._getTemplate();
+    this._elementPhoto = this._element.querySelector('.element__photo');
     this._setEventListeners();
-    this._element.querySelector('.element__photo').src = this._link;
-    this._element.querySelector('.element__photo').alt = this._name;
+    this._elementPhoto.src = this._link;
+    this._elementPhoto.alt = this._name;
     this._element.querySelector('.element__name').textContent = this._name;
 
     return this._element;
