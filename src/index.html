@@ -43,7 +43,10 @@
         <img class="element__photo" src="#" alt="">
         <div class="element__footer">
           <h2 class="element__name"></h2>
-          <button type="button" class="element__like"></button>
+          <div class="element__like-container">
+            <button type="button" class="element__like"></button>
+            <p class="element__like-counter">0</p>
+          </div>
         </div>
         <button type="button" class="element__delete" aria-label="Удалить"></button>
       </article>
@@ -95,6 +98,31 @@
       </figure>
     </div>
   </div>
+
+  <div class="popup popup_type_delete">
+    <!-- модификатор popup_opened при открытии -->
+    <div class="popup__container">
+        <button type="button" class="popup__close" aria-label="Закрыть"></button>
+        <form class="popup__form" name="delete-form">
+            <h2 class="popup__header">Вы уверены?</h2>
+            <button type="submit" class="popup__save">Да</button>
+          </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_avatar">
+    <!-- модификатор popup_opened при открытии -->
+    <div class="popup__container">
+      <button type="button" class="popup__close" aria-label="Закрыть"></button>
+        <form class="popup__form" name="avatar-form">
+          <h2 class="popup__header">Обновить аватар</h2>
+          <input type="text" name="avatar" class="popup__input popup__input_value_avatar" required placeholder="Ссылка"
+          id="avatar-input">
+            <button type="submit" class="popup__save">Сохранить</button>
+          </form>
+    </div>
+  </div>
+
   <script type='module' src="./pages/index.js"></script> <!--УДАЛИТЬ-->
 </body>
 
