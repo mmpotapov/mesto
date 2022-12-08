@@ -7,6 +7,8 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithDeletion } from '../components/PopupWithDeletion.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
+
 import {
   buttonEdit,
   buttonAddCard,
@@ -28,7 +30,7 @@ import {
 } from '../utils/elements.js';
 
 import {
-  initialCards,
+  // initialCards,
   configValidation,
 } from '../utils/constants.js';
 
@@ -44,13 +46,13 @@ const formEditingAvatarValidator = new FormValidator(configValidation, formAvata
 
 
 /** Создать и добавить в главный контейнер 6 исходных карт */
-const cardsContainerRender = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = downloadCard(item);
-    cardsContainerRender.addItem(card);
-  }
-}, cardsContainerSelector);
+// const cardsContainerRender = new Section({
+//   items: initialCards,
+//   renderer: (item) => {
+//     const card = downloadCard(item);
+//     cardsContainerRender.addItem(card);
+//   }
+// }, cardsContainerSelector);
 
 
 /** Создать попап с формой для добавления пользовательских фото */
@@ -128,7 +130,7 @@ function createCard(object) {
     (name, link) => { popupZoom.open(name, link) },
     (cardId, card) => {
       popupDeleteCard.open(cardId, card);
-     },
+    },
     false)
     .generateCard();
 }
@@ -139,14 +141,14 @@ function downloadCard(object) {
   return new Card(object,
     '#card',
     (name, link) => { popupZoom.open(name, link) },
-    () => {},
+    () => { },
     true)
     .generateCard();
 }
 
 
 /** Отрисовать контейнер с содержимым */
-cardsContainerRender.renderItems();
+// cardsContainerRender.renderItems();
 
 
 /** Активировать слушатели у попапов*/
@@ -161,3 +163,28 @@ popupDeleteCard.setEventListeners();
 formProfileEditValidator.enableValidation();
 formAddCardValidator.enableValidation();
 formEditingAvatarValidator.enableValidation();
+
+
+/** Создание экземпляра с API [ТОЛЬКО CARDS] */
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55/cards',
+  headers: {
+    authorization: 'a4c51acb-46f0-4f52-b5e2-f7cb5110adaa',
+    'Content-Type': 'application/json'
+  }
+});
+
+/** Загрузка исходных карточек с сервера */
+api.getInitialCards()
+  .then((result) => { console.log(result)
+    const cardsContainerRender = new Section({
+      items: result,
+      renderer: (item) => {
+        const card = downloadCard(item);
+        cardsContainerRender.addItem(card);
+      }
+    }, cardsContainerSelector);
+    cardsContainerRender.renderItems();
+  })
+  .catch((error) => {})
+
