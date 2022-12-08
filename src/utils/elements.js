@@ -15,3 +15,16 @@ export const popUpAddCardSelector = '.popup_type_card';
 export const popUpPhotoSelector = ".popup_type_photo";
 export const profileNameSelector = ".profile__name";
 export const profileProfessionSelector = ".profile__profession";
+
+
+/** Элементы и селекторы ПР9 */
+export const buttonAvatarEdit = document.querySelector(".profile__avatar-edit");
+export const popUpEditAvatarSelector = '.popup_type_avatar';
+export const avatar = document.querySelector(".profile__avatar");
+export const popUpDeletionSelector = '.popup_type_delete';
+const popUpEditAvatar = document.querySelector(".popup_type_avatar");
+export const formAvatarEdit = popUpEditAvatar.querySelector(".popup__form");
+
+
+
+

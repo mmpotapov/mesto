@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">  <!--УДАЛИТЬ-->
+  <link rel="stylesheet" href="./pages/index.css"> <!--УДАЛИТЬ-->
 </head>
 
 <body class="page">
@@ -16,8 +16,9 @@
   <main class="content">
     <section class="profile" aria-label="Профиль">
       <div class="profile__account">
-        <img class="profile__avatar" src="./images/Cousteau.png" alt="Фото профиля">  <!--УДАЛИТЬ-->
-        <!-- <img class="profile__avatar" src="<%=require('./images/Cousteau.png')%>" alt="Фото профиля"> --> <!-- РАССКОММЕНТИРОВАТЬ -->
+        <img class="profile__avatar" src="./images/Cousteau.png" alt="Фото профиля"> <!--УДАЛИТЬ-->
+        <!-- <img class="profile__avatar" src="<%=require('./images/Cousteau.png')%>" alt="Фото профиля"> -->
+        <!-- РАССКОММЕНТИРОВАТЬ -->
         <button class="profile__avatar-edit"></button>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -102,11 +103,11 @@
   <div class="popup popup_type_delete">
     <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
-        <button type="button" class="popup__close" aria-label="Закрыть"></button>
-        <form class="popup__form" name="delete-form">
-            <h2 class="popup__header">Вы уверены?</h2>
-            <button type="submit" class="popup__save">Да</button>
-          </form>
+      <button type="button" class="popup__close" aria-label="Закрыть"></button>
+      <form class="popup__form" name="delete-form">
+        <h2 class="popup__header">Вы уверены?</h2>
+        <button type="submit" class="popup__save">Да</button>
+      </form>
     </div>
   </div>
 
@@ -114,12 +115,13 @@
     <!-- модификатор popup_opened при открытии -->
     <div class="popup__container">
       <button type="button" class="popup__close" aria-label="Закрыть"></button>
-        <form class="popup__form" name="avatar-form">
-          <h2 class="popup__header">Обновить аватар</h2>
-          <input type="text" name="avatar" class="popup__input popup__input_value_avatar" required placeholder="Ссылка"
+      <form class="popup__form" name="avatar-form" novalidate>
+        <h2 class="popup__header">Обновить аватар</h2>
+        <input type="url" name="avatar" class="popup__input popup__input_value_avatar" required placeholder="Ссылка"
           id="avatar-input">
-            <button type="submit" class="popup__save">Сохранить</button>
-          </form>
+          <span class="popup__error avatar-input-error"></span>
+        <button type="submit" class="popup__save">Сохранить</button>
+      </form>
     </div>
   </div>
 
