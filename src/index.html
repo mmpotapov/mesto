@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
+  <link rel="stylesheet" href="./pages/index.css">  <!--УДАЛИТЬ-->
 </head>
 
 <body class="page">
@@ -15,8 +16,9 @@
   <main class="content">
     <section class="profile" aria-label="Профиль">
       <div class="profile__account">
-        <img class="profile__avatar" src="<%=require('./images/Cousteau.png')%>" alt="Фото профиля">
-
+        <img class="profile__avatar" src="./images/Cousteau.png" alt="Фото профиля">  <!--УДАЛИТЬ-->
+        <!-- <img class="profile__avatar" src="<%=require('./images/Cousteau.png')%>" alt="Фото профиля"> --> <!-- РАССКОММЕНТИРОВАТЬ -->
+        <button class="profile__avatar-edit"></button>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit" aria-label="Редактировать"></button>
@@ -93,6 +95,7 @@
       </figure>
     </div>
   </div>
+  <script type='module' src="./pages/index.js"></script> <!--УДАЛИТЬ-->
 </body>
 
 </html>

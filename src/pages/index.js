@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css'; // РАССКОММЕНТИРОВАТЬ
 
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
