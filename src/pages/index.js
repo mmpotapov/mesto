@@ -27,6 +27,7 @@ import {
   avatar,
   popUpDeletionSelector,
   formAvatarEdit,
+  formProfileEditSubmitButton,
 } from '../utils/elements.js';
 
 import {
@@ -45,14 +46,8 @@ const formAddCardValidator = new FormValidator(configValidation, formAddCard);
 const formEditingAvatarValidator = new FormValidator(configValidation, formAvatarEdit);
 
 
-/** Создать и добавить в главный контейнер 6 исходных карт */
-// const cardsContainerRender = new Section({
-//   items: initialCards,
-//   renderer: (item) => {
-//     const card = downloadCard(item);
-//     cardsContainerRender.addItem(card);
-//   }
-// }, cardsContainerSelector);
+/** Создать пустую секцию */
+const section = new Section(cardsContainerSelector);
 
 
 /** Создать попап с формой для добавления пользовательских фото */
@@ -62,7 +57,7 @@ const popupCard = new PopupWithForm({
       name: place,
       link: link
     });
-    cardsContainerRender.addItem(card);
+    section.addItem(card);
     formAddCardValidator.blockButton();
   }
 }, popUpAddCardSelector);
@@ -72,13 +67,18 @@ const popupCard = new PopupWithForm({
 const userInfo = new UserInfo({ nameSelector: profileNameSelector, professionSelector: profileProfessionSelector });
 
 
-/** Создать попап с формой для редактирования профиля */
+/** Экземпляр попапа для редактирования профиля (с реакцией на самбит) */
 const popupProfile = new PopupWithForm({
   handleFormSubmit: (data) => {
-    userInfo.setUserInfo({
-      username: data.name,
-      userprofession: data.profession,
-    })
+    formProfileEditSubmitButton.textContent = 'Сохранение...';
+    api.editProfile(data.name, data.profession)
+      .then(() => {
+        userInfo.setUserInfo({
+          username: data.name,
+          userprofession: data.profession,
+        })
+        popupProfile.close()
+        formProfileEditSubmitButton.textContent = 'Сохранить';});
   }
 }, popUpEditProfileSelector);
 
@@ -137,18 +137,14 @@ function createCard(object) {
 
 
 /** Загрузка исходной карточки */
-function downloadCard(object) {
-  return new Card(object,
-    '#card',
-    (name, link) => { popupZoom.open(name, link) },
-    () => { },
-    true)
-    .generateCard();
-}
-
-
-/** Отрисовать контейнер с содержимым */
-// cardsContainerRender.renderItems();
+// function downloadCard(object) {
+//   return new Card(object,
+//     '#card',
+//     (name, link) => { popupZoom.open(name, link) },
+//     () => { },
+//     true)
+//     .generateCard();
+// }
 
 
 /** Активировать слушатели у попапов*/
@@ -165,26 +161,31 @@ formAddCardValidator.enableValidation();
 formEditingAvatarValidator.enableValidation();
 
 
-/** Создание экземпляра с API [ТОЛЬКО CARDS] */
+/** Создание экземпляра API */
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55/cards',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55',
   headers: {
     authorization: 'a4c51acb-46f0-4f52-b5e2-f7cb5110adaa',
     'Content-Type': 'application/json'
   }
 });
 
-/** Загрузка исходных карточек с сервера */
+/** Поочерёдно отобразить на странице все карточки из сервера */
 api.getInitialCards()
-  .then((result) => { console.log(result)
-    const cardsContainerRender = new Section({
-      items: result,
-      renderer: (item) => {
-        const card = downloadCard(item);
-        cardsContainerRender.addItem(card);
-      }
-    }, cardsContainerSelector);
-    cardsContainerRender.renderItems();
+  .then((cardList) => {
+    cardList.forEach((data) => {
+      const card = createCard({
+        name: data.name,
+        link: data.link,
+      });
+      section.addItem(card)
+    })
   })
-  .catch((error) => {})
+  .catch((error) => { console.log(error) })
 
+/** Загрузить имя и описание из сервера */
+api.getProfile()
+  .then((res) => {
+    userInfo.setUserInfo({ username: res.name, userprofession: res.about }
+    )
+  })

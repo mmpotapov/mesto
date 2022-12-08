@@ -24,7 +24,7 @@ export const avatar = document.querySelector(".profile__avatar");
 export const popUpDeletionSelector = '.popup_type_delete';
 const popUpEditAvatar = document.querySelector(".popup_type_avatar");
 export const formAvatarEdit = popUpEditAvatar.querySelector(".popup__form");
-
+export const formProfileEditSubmitButton = popUpEditProfile.querySelector(".popup__save");
 
 
 
