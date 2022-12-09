@@ -218,6 +218,7 @@ Promise.all([api.getProfile(), api.getInitialCards()])
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
   formProfileEditValidator.clearErrors();
+  formProfileEditValidator.unlockButton();
   const userInfoData = userInfo.getUserInfo();
   nameInput.value = userInfoData.name;
   jobInput.value = userInfoData.profession;
@@ -227,6 +228,7 @@ buttonEdit.addEventListener("click", function () {
 
 /** Нажатие на [+] для добавления карточки */
 buttonAddCard.addEventListener("click", function () {
+  formAddCardValidator.blockButton()
   formAddCardValidator.clearErrors();
   popupCard.open();
 });
@@ -234,6 +236,7 @@ buttonAddCard.addEventListener("click", function () {
 
 /** Нажатие на аватар для изменения фото */
 buttonAvatarEdit.addEventListener("click", function () {
+  formEditingAvatarValidator.blockButton();
   formEditingAvatarValidator.clearErrors();
   popupAvatar.open();
 });

@@ -24,7 +24,7 @@ export class FormValidator {
   }
 
   /** Разблокировка кнопки */
-  _unlockButton() {
+  unlockButton() {
     this._buttonElement.classList.remove(this._inactiveButtonClass);
     this._buttonElement.removeAttribute('disabled');
   }
@@ -34,7 +34,7 @@ export class FormValidator {
     if (this._hasInvalidInput()) {
       this.blockButton();
     } else {
-      this._unlockButton();
+      this.unlockButton();
     }
   }
 
