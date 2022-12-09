@@ -1,14 +1,16 @@
 export class Card {
-  constructor(cardData, templateSelector, handleCardClick, handleDeletePopup, BOOOOOL) {
+  constructor(cardData, templateSelector, handleCardClick, handleDeletePopup) {
     this._name = cardData.name;
     this._link = cardData.link;
-    this._cardId = cardData._id;
+    this._id = cardData.id;
     this._likes = cardData.likes;
+    this._userId = cardData.userId;
+    this._ownerId = cardData.ownerId;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeletePopup = handleDeletePopup;
-    this._BOOOOOL = BOOOOOL;
   }
+
 
   /** Получить темплейт */
   _getTemplate() {
@@ -52,7 +54,7 @@ export class Card {
     })
     /** Корзина */
     this._elementDelete.addEventListener("click", () => {
-      this._handleDeletePopup(this._cardId, this._element);
+      this._handleDeletePopup(this._id, this._element);
     })
     /** Раскрыть фото */
     this._elementPhoto.addEventListener('click', () => {
@@ -73,7 +75,7 @@ export class Card {
     this._element.querySelector('.element__name').textContent = this._name;
     this._setLikes();
     /** Исключения для исходных карточек */
-    if (this._BOOOOOL){
+    if (this._userId !== this._ownerId) {
       this._elementDelete.remove();
     }
 

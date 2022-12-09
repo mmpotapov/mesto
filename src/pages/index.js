@@ -31,9 +31,27 @@ import {
 } from '../utils/elements.js';
 
 import {
-  // initialCards,
   configValidation,
 } from '../utils/constants.js';
+
+
+/** Создание экземпляра API */
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55',
+  headers: {
+    authorization: 'a4c51acb-46f0-4f52-b5e2-f7cb5110adaa',
+    'Content-Type': 'application/json'
+  }
+});
+
+let userId;
+
+/** Загрузить имя и описание из сервера */
+api.getProfile()
+  .then((res) => {
+    userInfo.setUserInfo({ username: res.name, userprofession: res.about });
+    userId = res._id;
+  })
 
 
 /** Создать попап с картинкой */
@@ -54,11 +72,13 @@ const section = new Section(cardsContainerSelector);
 const popupCard = new PopupWithForm({
   handleFormSubmit: ({ place, link }) => {
     api.addCard(place, link).then((res) => {
-      console.log(res)
       const card = createCard({
         name: res.name,
         link: res.link,
         likes: res.likes,
+        id: res._id,
+        userId: userId,
+        ownerId: res.owner._id,
       });
       section.addItem(card);
       formAddCardValidator.blockButton();
@@ -75,10 +95,10 @@ function createCard(object) {
   return new Card(object,
     '#card',
     (name, link) => { popupZoom.open(name, link) },
-    (cardId, card) => {
-      popupDeleteCard.open(cardId, card);
-    },
-    false)
+    (id, card) => {
+      console.log(id);
+      popupDeleteCard.open(id, card);
+    })
     .generateCard();
 }
 
@@ -98,7 +118,8 @@ const popupProfile = new PopupWithForm({
           userprofession: data.profession,
         })
         popupProfile.close();
-        formProfileEditSubmitButton.textContent = 'Сохранить';});
+        formProfileEditSubmitButton.textContent = 'Сохранить';
+      });
   }
 }, popUpEditProfileSelector);
 
@@ -115,6 +136,7 @@ const popupAvatar = new PopupWithForm({
 /** Экземпляр попапа для подтверждения удаления  */
 const popupDeleteCard = new PopupWithDeletion({
   handleFormSubmit: (cardId, card) => {
+    api.deleteCard(cardId);
     card.remove();
   }
 }, popUpDeletionSelector);
@@ -157,33 +179,22 @@ formAddCardValidator.enableValidation();
 formEditingAvatarValidator.enableValidation();
 
 
-/** Создание экземпляра API */
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55',
-  headers: {
-    authorization: 'a4c51acb-46f0-4f52-b5e2-f7cb5110adaa',
-    'Content-Type': 'application/json'
-  }
-});
+
 
 /** Поочерёдно отобразить на странице все карточки из сервера */
 api.getInitialCards()
   .then((cardList) => {
-    console.log(cardList);
     cardList.forEach((res) => {
       const card = createCard({
         name: res.name,
         link: res.link,
         likes: res.likes,
+        id: res._id,
+        userId: userId,
+        ownerId: res.owner._id,
       });
       section.addInitialItem(card)
     })
   })
-  .catch((error) => { console.log(error) })
+  .catch((error) => { })
 
-/** Загрузить имя и описание из сервера */
-api.getProfile()
-  .then((res) => {
-    userInfo.setUserInfo({ username: res.name, userprofession: res.about }
-    )
-  })
