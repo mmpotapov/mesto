@@ -13,10 +13,9 @@ export class Api {
       if (res.ok) {
         return res.json();
       } else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
-      .catch((res) => { console.log(res) })
   }
 
   /** Запросить все карточки с сервера */
@@ -28,7 +27,7 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
@@ -47,7 +46,7 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
@@ -66,7 +65,7 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
@@ -81,7 +80,7 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
@@ -96,7 +95,7 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
@@ -111,11 +110,28 @@ export class Api {
         return res.json();
       }
       else {
-        return Promise.reject(res.status)
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
   }
 
+    /** Отправить свой аватар */
+    editAvatar(avatar) {
+      return fetch(`${this._baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: avatar
+        })
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        else {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
+    }
 
 }
 

@@ -12,10 +12,11 @@ export class Card {
     this._handleLikeClick = handleLikeClick;
   }
 
-
   /** Получить темплейт */
   _getTemplate() {
-    const cardElement = document.querySelector(this._templateSelector).content.querySelector(".elements__card").cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector)
+      .content.querySelector(".elements__card")
+      .cloneNode(true);
     return cardElement;
   }
 
@@ -75,10 +76,12 @@ export class Card {
     this._elementLike = this._element.querySelector('.element__like');
     this._elementDelete = this._element.querySelector('.element__delete');
     this._likesCounter = this._element.querySelector('.element__like-counter');
+    this._elementName = this._element.querySelector('.element__name');
+
     this._setEventListeners();
     this._elementPhoto.src = this._link;
     this._elementPhoto.alt = this._name;
-    this._element.querySelector('.element__name').textContent = this._name;
+    this._elementName.textContent = this._name;
     this.setLikes(this._likes);
     /** Удалять корзинку для чужих карточек */
     if (this._userId !== this._ownerId) {

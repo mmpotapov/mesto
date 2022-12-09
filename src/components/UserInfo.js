@@ -1,8 +1,9 @@
 /** Конструктор профиля */
 export class UserInfo {
-  constructor({ nameSelector, professionSelector }) {
+  constructor({ nameSelector, professionSelector, avatarSelector }) {
     this._profileName = document.querySelector(nameSelector);
     this._profileProfession = document.querySelector(professionSelector);
+    this._profileAvatar = document.querySelector(avatarSelector);
   }
 
   /** Получить текущие данные */
@@ -14,8 +15,9 @@ export class UserInfo {
   }
 
   /** Установить данные */
-  setUserInfo({ username, userprofession }) {
+  setUserInfo({ username, userprofession, useravatar }) {
     this._profileName.textContent = username;
     this._profileProfession.textContent = userprofession;
+    this._profileAvatar.src = useravatar;
   }
 }

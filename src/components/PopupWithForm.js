@@ -18,7 +18,7 @@ export class PopupWithForm extends Popup {
     return inputs;
   };
 
-  /** Закрыть попап со сброс полей */
+  /** Закрыть попап со сбросом полей */
   close() {
     super.close();
     this._popupElementForm.reset();

@@ -16,10 +16,10 @@
   <main class="content">
     <section class="profile" aria-label="Профиль">
       <div class="profile__account">
-        <img class="profile__avatar" src="./images/Cousteau.png" alt="Фото профиля"> <!--УДАЛИТЬ-->
+        <img class="profile__avatar" src="#" alt="Фото профиля"> <!--УДАЛИТЬ-->
         <!-- <img class="profile__avatar" src="<%=require('./images/Cousteau.png')%>" alt="Фото профиля"> -->
         <!-- РАССКОММЕНТИРОВАТЬ -->
-        <button class="profile__avatar-edit"></button>
+        <button class="profile__avatar-edit" aria-label="Изменить фото"></button>
         <div class="profile__info">
           <h1 class="profile__name"></h1>
           <button type="button" class="profile__edit" aria-label="Редактировать"></button>
@@ -28,10 +28,12 @@
       </div>
       <button type="button" class="profile__button-add" aria-label="Добавить"></button>
     </section>
+
     <section class="elements" aria-label="Галерея мест">
       <ul class="elements__list">
       </ul>
     </section>
+
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
@@ -119,7 +121,7 @@
         <h2 class="popup__header">Обновить аватар</h2>
         <input type="url" name="avatar" class="popup__input popup__input_value_avatar" required placeholder="Ссылка"
           id="avatar-input">
-          <span class="popup__error avatar-input-error"></span>
+        <span class="popup__error avatar-input-error"></span>
         <button type="submit" class="popup__save">Сохранить</button>
       </form>
     </div>
