@@ -1,3 +1,4 @@
+/** Конструктор секции для карточек */
 export class Section {
   constructor(containerSelector) {
     this._container = document.querySelector(containerSelector);
@@ -8,8 +9,14 @@ export class Section {
     this._container.innerHTML = '';
   }
 
-  /** Добавить элемент в контейнер */
+  /** Добавить элемент начало контейнера */
   addItem(element) {
     this._container.prepend(element);
   }
+
+  /** Добавить элемент в конец контейнера (для исходных карточек) */
+  addInitialItem(element) {
+    this._container.append(element);
+  }
+
 }

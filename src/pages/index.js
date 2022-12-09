@@ -53,14 +53,34 @@ const section = new Section(cardsContainerSelector);
 /** Создать попап с формой для добавления пользовательских фото */
 const popupCard = new PopupWithForm({
   handleFormSubmit: ({ place, link }) => {
-    const card = createCard({
-      name: place,
-      link: link
-    });
-    section.addItem(card);
-    formAddCardValidator.blockButton();
+    api.addCard(place, link).then((res) => {
+      console.log(res)
+      const card = createCard({
+        name: res.name,
+        link: res.link,
+        likes: res.likes,
+      });
+      section.addItem(card);
+      formAddCardValidator.blockButton();
+      popupCard.close();
+    })
   }
 }, popUpAddCardSelector);
+
+
+
+
+/** Генерация новой карточки */
+function createCard(object) {
+  return new Card(object,
+    '#card',
+    (name, link) => { popupZoom.open(name, link) },
+    (cardId, card) => {
+      popupDeleteCard.open(cardId, card);
+    },
+    false)
+    .generateCard();
+}
 
 
 /** Управление информацией о пользователе */
@@ -77,7 +97,7 @@ const popupProfile = new PopupWithForm({
           username: data.name,
           userprofession: data.profession,
         })
-        popupProfile.close()
+        popupProfile.close();
         formProfileEditSubmitButton.textContent = 'Сохранить';});
   }
 }, popUpEditProfileSelector);
@@ -123,30 +143,6 @@ buttonAvatarEdit.addEventListener("click", function () {
 });
 
 
-/** Генерация новой карточки */
-function createCard(object) {
-  return new Card(object,
-    '#card',
-    (name, link) => { popupZoom.open(name, link) },
-    (cardId, card) => {
-      popupDeleteCard.open(cardId, card);
-    },
-    false)
-    .generateCard();
-}
-
-
-/** Загрузка исходной карточки */
-// function downloadCard(object) {
-//   return new Card(object,
-//     '#card',
-//     (name, link) => { popupZoom.open(name, link) },
-//     () => { },
-//     true)
-//     .generateCard();
-// }
-
-
 /** Активировать слушатели у попапов*/
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
@@ -173,12 +169,14 @@ const api = new Api({
 /** Поочерёдно отобразить на странице все карточки из сервера */
 api.getInitialCards()
   .then((cardList) => {
-    cardList.forEach((data) => {
+    console.log(cardList);
+    cardList.forEach((res) => {
       const card = createCard({
-        name: data.name,
-        link: data.link,
+        name: res.name,
+        link: res.link,
+        likes: res.likes,
       });
-      section.addItem(card)
+      section.addInitialItem(card)
     })
   })
   .catch((error) => { console.log(error) })
