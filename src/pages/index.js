@@ -88,18 +88,31 @@ const popupCard = new PopupWithForm({
 }, popUpAddCardSelector);
 
 
-
-
 /** Генерация новой карточки */
 function createCard(object) {
-  return new Card(object,
+  const card = new Card(object,
     '#card',
+    /** Функция-реакция нажатия на фото */
     (name, link) => { popupZoom.open(name, link) },
+    /** Функция-реакция нажатия на корзину */
     (id, card) => {
-      console.log(id);
       popupDeleteCard.open(id, card);
+    },
+    /** Функция-реакция нажатия на лайк */
+    (id) => {
+      if (card.isLiked()) {
+        api.deleteLike(id)
+          .then((res) => {
+            card.setLikes(res.likes)
+          });
+      } else {
+        api.addLike(id)
+          .then((res) => {
+            card.setLikes(res.likes)
+          });
+      }
     })
-    .generateCard();
+  return card.generateCard();
 }
 
 
@@ -177,8 +190,6 @@ popupDeleteCard.setEventListeners();
 formProfileEditValidator.enableValidation();
 formAddCardValidator.enableValidation();
 formEditingAvatarValidator.enableValidation();
-
-
 
 
 /** Поочерёдно отобразить на странице все карточки из сервера */

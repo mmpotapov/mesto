@@ -1,5 +1,5 @@
 export class Card {
-  constructor(cardData, templateSelector, handleCardClick, handleDeletePopup) {
+  constructor(cardData, templateSelector, handleCardClick, handleDeletePopup, handleLikeClick) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._id = cardData.id;
@@ -9,6 +9,7 @@ export class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeletePopup = handleDeletePopup;
+    this._handleLikeClick = handleLikeClick;
   }
 
 
@@ -18,39 +19,44 @@ export class Card {
     return cardElement;
   }
 
-  /** Лайк поставален */
-  _putLike(icon) {
-    icon.classList.add("element__like_active");
-  }
-
-  /** Нет лайка */
-  _noLike(icon) {
-    icon.classList.remove("element__like_active");
-  }
-
-
-  _setLikes() {
-    this._likesCounter.textContent = this._likes.length;
-  }
-
-
   /** Удалить карточку */
   _handleDeleteCard() {
     this._element.remove();
   }
 
+  /** Лайк поставален */
+  _putLike() {
+    this._elementLike.classList.add("element__like_active");
+  }
+
+  /** Нет лайка */
+  _noLike() {
+    this._elementLike.classList.remove("element__like_active");
+  }
+
+  /** Проверка, стоит ли наш лайк */
+  isLiked() {
+    const likeBool = this._likes.find(user => user._id == this._userId);
+    return likeBool;
+  }
+
+  /** Изменить счётчик и цвет при нажатии на лайк */
+  setLikes(newLikes) {
+    this._likes = newLikes;
+    this._likesCounter.textContent = this._likes.length;
+    /** Менять цвет */
+    if (this.isLiked()) {
+      this._putLike();
+    } else {
+      this._noLike();
+    }
+  }
+
   /** Слушатели */
   _setEventListeners() {
     /** Лайк */
-    this._elementLike.addEventListener('click', () => {
-      if (this._elementLike.classList.contains("element__like_active")) {
-        this._noLike(this._elementLike);
-        this._likesCounter.textContent = 5;
-      }
-      else {
-        this._putLike(this._elementLike);
-        this._likesCounter.textContent = 12;
-      }
+    this._elementLike.addEventListener("click", () => {
+      this._handleLikeClick(this._id);
     })
     /** Корзина */
     this._elementDelete.addEventListener("click", () => {
@@ -73,12 +79,11 @@ export class Card {
     this._elementPhoto.src = this._link;
     this._elementPhoto.alt = this._name;
     this._element.querySelector('.element__name').textContent = this._name;
-    this._setLikes();
-    /** Исключения для исходных карточек */
+    this.setLikes(this._likes);
+    /** Удалять корзинку для чужих карточек */
     if (this._userId !== this._ownerId) {
       this._elementDelete.remove();
     }
-
     return this._element;
   }
 }
