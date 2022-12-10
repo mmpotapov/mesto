@@ -5,31 +5,27 @@ export class Api {
     this._headers = headers;
   }
 
+  /** Проверка ответа с сервера */
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+
   /** Запросить данные о своём профиле */
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Запросить все карточки с сервера */
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Отправить изменения информации о себе */
@@ -41,14 +37,7 @@ export class Api {
         name: name,
         about: profession
       })
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Добавить свою карточку на сервер */
@@ -60,14 +49,7 @@ export class Api {
         name: name,
         link: link
       })
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Удалить карточку с сервера */
@@ -75,14 +57,7 @@ export class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Удалить свой лайк */
@@ -90,14 +65,7 @@ export class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
   /** Добавить свой лайк */
@@ -105,34 +73,21 @@ export class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    }).then(this._checkResponse);
   }
 
-    /** Отправить свой аватар */
-    editAvatar(avatar) {
-      return fetch(`${this._baseUrl}/users/me/avatar`, {
-        method: 'PATCH',
-        headers: this._headers,
-        body: JSON.stringify({
-          avatar: avatar
-        })
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+  /** Отправить свой аватар */
+  editAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar
       })
-    }
+    }).then(this._checkResponse);
+  }
 
+  // refactor: создать метод _request(), универсальный метод запроса с проверкой ответа
 }
 
 

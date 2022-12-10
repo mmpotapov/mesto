@@ -14,19 +14,6 @@ export const formProfileEdit = popUpEditProfile.querySelector(".popup__form");
 export const formAvatarEdit = popUpEditAvatar.querySelector(".popup__form");
 export const formAddCard = popUpAddCard.querySelector(".popup__form");
 
-/** Кнопки сабмитов форм */
-export const formProfileEditSubmitButton = popUpEditProfile.querySelector(".popup__save");
-export const formAddCardSubmitButton = popUpAddCard.querySelector(".popup__save");
-export const formEditAvatarSubmitButton = popUpEditAvatar.querySelector(".popup__save");
-export const formConfirmDeletionSubmitButton = popUpDeletion.querySelector(".popup__save");
-
-/** Инпуты */
-export const nameInput = formProfileEdit.querySelector(".popup__input_value_name");
-export const jobInput = formProfileEdit.querySelector(".popup__input_value_profession");
-
-/** Изображение аватара */
-export const avatar = document.querySelector(".profile__avatar");
-
 
 /** Селекторы */
 export const popUpAddCardSelector = '.popup_type_card';

@@ -14,10 +14,15 @@ export class UserInfo {
     }
   }
 
+  /** Изменить аватар */
+  setAvatar(data) {
+    this._profileAvatar.src = data.avatar;
+  }
+
   /** Установить данные */
-  setUserInfo({ username, userprofession, useravatar }) {
-    this._profileName.textContent = username;
-    this._profileProfession.textContent = userprofession;
-    this._profileAvatar.src = useravatar;
+  setUserInfo({ name, about, avatar }) {
+    this._profileName.textContent = name;
+    this._profileProfession.textContent = about;
+    this._profileAvatar.src = avatar;
   }
 }

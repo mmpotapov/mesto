@@ -16,13 +16,6 @@ import {
   formAvatarEdit,
   formAddCard,
   formProfileEdit,
-  formProfileEditSubmitButton,
-  formAddCardSubmitButton,
-  formEditAvatarSubmitButton,
-  formConfirmDeletionSubmitButton,
-  nameInput,
-  jobInput,
-  avatar,
   cardsContainerSelector,
   popUpEditProfileSelector,
   popUpAddCardSelector,
@@ -54,6 +47,7 @@ const popupZoom = new PopupWithImage(popUpPhotoSelector);
 const formProfileEditValidator = new FormValidator(configValidation, formProfileEdit);
 const formAddCardValidator = new FormValidator(configValidation, formAddCard);
 const formEditingAvatarValidator = new FormValidator(configValidation, formAvatarEdit);
+// refactor: создать один бъект со всеми валидаторами
 
 
 /** Создать экземпляр главной секции */
@@ -106,7 +100,6 @@ const popupCard = new PopupWithForm({
     return api.addCard(place, link).then((res) => {
       /** Создание карточки из полученных данных с сервера */
       section.addItem(createCard(res))
-      formAddCardValidator.blockButton();
     })
       .catch((err) => {
         console.log(err);
@@ -130,14 +123,14 @@ const popupProfile = new PopupWithForm({
     return api.editProfile(data.name, data.profession)
       .then((res) => {
         userInfo.setUserInfo({
-          username: res.name,
-          userprofession: res.about,
+          name: res.name,
+          about: res.about,
+          avatar: res.avatar,
         })
-        avatar.src = res.avatar;
       })
       .catch((err) => {
         console.log(err);
-      });;
+      });
   }
 }, popUpEditProfileSelector);
 
@@ -147,7 +140,7 @@ const popupAvatar = new PopupWithForm({
   handleFormSubmit: (data) => {
     return api.editAvatar(data.avatar)
       .then((res) => {
-        avatar.src = res.avatar
+        userInfo.setAvatar(res);
         formEditingAvatarValidator.blockButton();
       })
       .catch((err) => {
@@ -172,26 +165,24 @@ const popupDeleteCard = new PopupWithDeletion({
 
 let userId = '';
 
-/** Выгрузить имя, описание и аватар из сервера */
-api.getProfile()
-  .then((res) => {
-    userInfo.setUserInfo({ username: res.name, userprofession: res.about, useravatar: res.avatar });
-    userId = res._id;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
-
-/** Поочерёдно отобразить на странице все карточки из сервера */
+/** Выгрузить имя, описание и аватар из сервера.
+Поочерёдно отобразить на странице все карточки из сервера */
 Promise.all([api.getProfile(), api.getInitialCards()])
   .then(([profileInfo, cardList]) => {
+    userInfo.setUserInfo(
+      {
+        name: profileInfo.name,
+        about: profileInfo.about,
+        avatar: profileInfo.avatar,
+      });
     userId = profileInfo._id;
     section.renderItems(cardList);
   })
   .catch((err) => {
     console.log(err);
   });
+
 
 /** Нажатие на карандаш для изменения профиля */
 buttonEdit.addEventListener("click", function () {
