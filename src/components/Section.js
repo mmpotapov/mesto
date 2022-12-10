@@ -1,12 +1,8 @@
 /** Конструктор секции для карточек */
 export class Section {
-  constructor(containerSelector) {
+  constructor({ renderer }, containerSelector) {
+    this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
-  }
-
-  /** Очистить контейнер */
-  clear() {
-    this._container.innerHTML = '';
   }
 
   /** Добавить элемент начало контейнера */
@@ -19,4 +15,8 @@ export class Section {
     this._container.append(element);
   }
 
+  /**  Цикл с перебором эелементов и срабатыванием _renderer на каждом*/
+  renderItems(items) {
+    items.forEach(this._renderer);
+  }
 }

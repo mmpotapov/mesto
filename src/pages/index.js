@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';   <!-- РАСКОММЕНТИРОВАТЬ перед WebPack -->
 
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -56,13 +56,19 @@ const formAddCardValidator = new FormValidator(configValidation, formAddCard);
 const formEditingAvatarValidator = new FormValidator(configValidation, formAvatarEdit);
 
 
-/** Создать пустую секцию */
-const section = new Section(cardsContainerSelector);
+/** Создать экземпляр главной секции */
+const section = new Section({
+  renderer: (item) => {
+    section.addInitialItem(createCard(item));
+  }
+},
+  cardsContainerSelector);
 
 
 /** Функция генерации новой карточки */
 function createCard(object) {
   const card = new Card(object,
+    userId,
     '#card',
     /** Функция-реакция нажатия на фото */
     (name, link) => { popupZoom.open(name, link) },
@@ -97,20 +103,9 @@ function createCard(object) {
 /** Экземпляр попапа для добавления нового фото (с реакцией на самбит) */
 const popupCard = new PopupWithForm({
   handleFormSubmit: ({ place, link }) => {
-    formAddCardSubmitButton.textContent = 'Сохранение...';
-    api.addCard(place, link).then((res) => {
+    return api.addCard(place, link).then((res) => {
       /** Создание карточки из полученных данных с сервера */
-      const card = createCard({
-        name: res.name,
-        link: res.link,
-        likes: res.likes,
-        id: res._id,
-        userId: userId,
-        ownerId: res.owner._id,
-      });
-      section.addItem(card);
-      popupCard.close();
-      formAddCardSubmitButton.textContent = 'Сохранить';
+      section.addItem(createCard(res))
       formAddCardValidator.blockButton();
     })
       .catch((err) => {
@@ -132,16 +127,13 @@ const userInfo = new UserInfo(
 /** Экземпляр попапа для редактирования имени и описания (с реакцией на самбит) */
 const popupProfile = new PopupWithForm({
   handleFormSubmit: (data) => {
-    formProfileEditSubmitButton.textContent = 'Сохранение...';
-    api.editProfile(data.name, data.profession)
+    return api.editProfile(data.name, data.profession)
       .then((res) => {
         userInfo.setUserInfo({
           username: res.name,
           userprofession: res.about,
         })
         avatar.src = res.avatar;
-        popupProfile.close();
-        formProfileEditSubmitButton.textContent = 'Сохранить';
       })
       .catch((err) => {
         console.log(err);
@@ -153,12 +145,9 @@ const popupProfile = new PopupWithForm({
 /** Экземпляр попапа с изменением аватара  */
 const popupAvatar = new PopupWithForm({
   handleFormSubmit: (data) => {
-    formEditAvatarSubmitButton.textContent = 'Сохранение...';
-    api.editAvatar(data.avatar)
+    return api.editAvatar(data.avatar)
       .then((res) => {
         avatar.src = res.avatar
-        popupAvatar.close();
-        formEditAvatarSubmitButton.textContent = 'Сохранить';
         formEditingAvatarValidator.blockButton();
       })
       .catch((err) => {
@@ -171,10 +160,8 @@ const popupAvatar = new PopupWithForm({
 /** Экземпляр попапа для подтверждения удаления  */
 const popupDeleteCard = new PopupWithDeletion({
   handleFormSubmit: (cardId, card) => {
-    formConfirmDeletionSubmitButton.textContent = "Удаление...";
-    api.deleteCard(cardId).then(() => {
+    return api.deleteCard(cardId).then(() => {
       card.remove();
-      formConfirmDeletionSubmitButton.textContent = "Да";
     })
       .catch((err) => {
         console.log(err);
@@ -199,17 +186,8 @@ api.getProfile()
 /** Поочерёдно отобразить на странице все карточки из сервера */
 Promise.all([api.getProfile(), api.getInitialCards()])
   .then(([profileInfo, cardList]) => {
-    cardList.forEach((res) => {
-      const card = createCard({
-        name: res.name,
-        link: res.link,
-        likes: res.likes,
-        id: res._id,
-        userId: profileInfo._id,
-        ownerId: res.owner._id,
-      });
-      section.addInitialItem(card)
-    })
+    userId = profileInfo._id;
+    section.renderItems(cardList);
   })
   .catch((err) => {
     console.log(err);
@@ -220,8 +198,7 @@ buttonEdit.addEventListener("click", function () {
   formProfileEditValidator.clearErrors();
   formProfileEditValidator.unlockButton();
   const userInfoData = userInfo.getUserInfo();
-  nameInput.value = userInfoData.name;
-  jobInput.value = userInfoData.profession;
+  popupProfile.setInputValues(userInfoData);
   popupProfile.open();
 });
 

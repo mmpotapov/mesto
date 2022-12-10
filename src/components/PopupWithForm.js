@@ -7,6 +7,8 @@ export class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._inputList = this._popupElement.querySelectorAll('.popup__input');
     this._popupElementForm = this._popupElement.querySelector(".popup__form");
+    this._submitButton = this._popupElementForm.querySelector(".popup__save");
+    this._submitButtonText = this._submitButton.textContent;
   }
 
   /** Создать объект из введённых данных */
@@ -17,6 +19,22 @@ export class PopupWithForm extends Popup {
     });
     return inputs;
   };
+
+  /** Менять текст кнопки сабмита при загрузке */
+  renderLoading(isLoading, loadingText = 'Сохранение...') {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = this._submitButtonText;
+    }
+  }
+
+  /** Назначить value для инпутов, из объекта */
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    })
+  }
 
   /** Закрыть попап со сбросом полей */
   close() {
@@ -29,7 +47,12 @@ export class PopupWithForm extends Popup {
     super.setEventListeners();
     this._popupElementForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
+      this.renderLoading(true);
+      this._handleFormSubmit(this._getInputValues())
+      .then(() => this.close())
+      .finally(() => {
+        this.renderLoading(false);
+      });
     });
   }
 }

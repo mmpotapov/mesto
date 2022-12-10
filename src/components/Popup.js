@@ -26,7 +26,7 @@ export class Popup {
 
   /** Слушатель крестика и нажатия на оверлей, с реакцией закрытия */
   setEventListeners() {
-    this._popupElement.addEventListener('click', (evt) => {
+    this._popupElement.addEventListener('mousedown', (evt) => {
       if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
         this.close();
       }
